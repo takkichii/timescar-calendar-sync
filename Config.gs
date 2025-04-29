@@ -30,11 +30,10 @@ function config() {
   this.emailSubFactorRsvCanceled = '予約取消完了';
   this.emailSubFactorRsvAccomplished = '返却証';
 
-  // 文字列取得のための補正値
-  this.correctionStartDateTimeNum = 9;
-  this.correctionEndDateTimeNum = 27;
-  this.correctionStartRsvNum = 7;
-  this.correctionEndRsvNum = 18;
+  // 文字列取得のための正規表現
+  this.regExpRsvNumber = /■予約番号\s*(\d+)/;
+  this.regExpRsvStartDateTime = /■利用開始日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/;
+  this.regExpRsvEndDateTime = /■返却予定日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/;
   
   return this;
 }
