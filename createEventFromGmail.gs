@@ -42,9 +42,12 @@ function createEventFromGmail() {
     // 項目の値を取得
     const emailSubject = eachMssg.getSubject(); // メールの件名を取得
     const emailBody = eachMssg.getBody(); // メール本文のテキストを取得
-    const reservationNumber = emailBody.match(conf.regExpRsvNumber)[1].trim(); // 予約番号
-    const startDateTime = new Date(emailBody.match(conf.regExpRsvStartDateTime)[1]); // 開始時刻の取得
-    const endDatetime = new Date(emailBody.match(conf.regExpRsvEndDateTime)[1]); // 終了時刻の取得
+    const reservationNumber = emailBody.match(conf.regExpRsvNumber) ? emailBody.match(conf.regExpRsvNumber)[1].trim() : null; // 予約番号
+    const startDateTime = emailBody.match(conf.regExpRsvStartDateTime) ? new Date(emailBody.match(conf.regExpRsvStartDateTime)[1]) : null; // 開始時刻の取得
+    const endDatetime = emailBody.match(conf.regExpRsvEndDateTime) ? new Date(emailBody.match(conf.regExpRsvEndDateTime)[1]) : null; // 終了時刻の取得
+
+    console.log(startDateTime);
+    console.log(endDatetime);
 
     // 同期履歴を参照
     conditions = [
