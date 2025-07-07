@@ -46,9 +46,6 @@ function createEventFromGmail() {
     const startDateTime = emailBody.match(conf.regExpRsvStartDateTime) ? new Date(emailBody.match(conf.regExpRsvStartDateTime)[1]) : null; // 開始時刻の取得
     const endDatetime = emailBody.match(conf.regExpRsvEndDateTime) ? new Date(emailBody.match(conf.regExpRsvEndDateTime)[1]) : null; // 終了時刻の取得
 
-    console.log(startDateTime);
-    console.log(endDatetime);
-
     // 同期履歴を参照
     conditions = [
       { key: conf.headerReservationNumber, value: Number(reservationNumber) }
