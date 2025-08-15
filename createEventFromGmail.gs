@@ -56,7 +56,8 @@ function createEventFromGmail() {
     if (syncHisData.length === 0 && emailSubject.includes(conf.emailSubFactorRsvDone)) { // 履歴がなく、新規予約登録の場合
       // カレンダー登録
       const eventTitle = conf.subjectCalendarEvent + ' :' + reservationNumber;
-      const event = CalendarApp.getDefaultCalendar().createEvent(
+      const calendar = !conf.calendarId ? CalendarApp.getDefaultCalendar() : CalendarApp.getCalendarById(conf.calendarId); // カレンダーの取得
+      const event = calendar.createEvent(
         eventTitle,
         startDateTime,
         endDatetime,

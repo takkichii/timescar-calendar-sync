@@ -9,6 +9,7 @@ function config() {
 
   this.labelNameTimesCar = 'TimesCar'; // Gmail の任意のラベル名
   this.subjectCalendarEvent = 'Times Car 予約'; // カレンダーのタイトル
+  this.calendarId = ''; // カレンダー ID（空の場合はデフォルトのカレンダーが選択される）
 
   this.sheetNameSyncDateTime = '同期時刻管理';
   this.sheetNameSyncHistory = '同期履歴';
