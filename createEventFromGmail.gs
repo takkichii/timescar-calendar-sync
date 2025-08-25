@@ -12,6 +12,7 @@ function createEventFromGmail() {
   const mdl = new Model(); // Database（スプレッドシート）操作クラス
   const now = new Date();
   const nowStr = Utilities.formatDate(now, timeZone, 'yyyy/MM/dd HH:mm:ss');
+  const calendar = !conf.calendarId ? CalendarApp.getDefaultCalendar() : CalendarApp.getCalendarById(conf.calendarId); // カレンダーの取得
 
   // スプレッドシートから更新日時を取得
   const syncData = mdl.getData(conf.sheetNameSyncDateTime);
@@ -56,7 +57,6 @@ function createEventFromGmail() {
     if (syncHisData.length === 0 && emailSubject.includes(conf.emailSubFactorRsvDone)) { // 履歴がなく、新規予約登録の場合
       // カレンダー登録
       const eventTitle = conf.subjectCalendarEvent + ' :' + reservationNumber;
-      const calendar = !conf.calendarId ? CalendarApp.getDefaultCalendar() : CalendarApp.getCalendarById(conf.calendarId); // カレンダーの取得
       const event = calendar.createEvent(
         eventTitle,
         startDateTime,
@@ -82,7 +82,7 @@ function createEventFromGmail() {
       // カレンダーの更新
       // イベントの取得
       const eventId = syncHisData[0][conf.headerCalendarEventId];
-      const event = CalendarApp.getEventById(eventId);
+      const event = calendar.getEventById(eventId);
       // 情報の更新
       event.setTime(startDateTime, endDatetime); // 予約時刻
       event.setDescription(emailBody); // 説明欄
@@ -98,7 +98,7 @@ function createEventFromGmail() {
       // カレンダーの削除
       // イベントの取得
       const eventId = syncHisData[0][conf.headerCalendarEventId];
-      const event = CalendarApp.getEventById(eventId);
+      const event = calendar.getEventById(eventId);
       // イベントの削除
       event.deleteEvent();
 
@@ -113,7 +113,7 @@ function createEventFromGmail() {
       // カレンダーの更新
       // イベントの取得
       const eventId = syncHisData[0][conf.headerCalendarEventId];
-      const event = CalendarApp.getEventById(eventId);
+      const event = calendar.getEventById(eventId);
       // 情報の更新
       event.setDescription(emailBody); // 説明欄
 
