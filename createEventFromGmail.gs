@@ -67,7 +67,7 @@ function createEventFromGmail() {
           description: emailBody
         }
       );
-      event.setColor(CalendarApp.EventColor.YELLOW); // イベントの色を設定
+      event.setColor(CalendarApp.EventColor.GRAY); // イベントの色を設定
 
       // Database データの格納
       const keyValuePairs = [{
