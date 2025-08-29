@@ -44,8 +44,10 @@ function createEventFromGmail() {
     const emailSubject = eachMssg.getSubject(); // メールの件名を取得
     const emailBody = eachMssg.getBody(); // メール本文のテキストを取得
     const reservationNumber = emailBody.match(conf.regExpRsvNumber) ? emailBody.match(conf.regExpRsvNumber)[1].trim() : null; // 予約番号
-    const startDateTime = emailBody.match(conf.regExpRsvStartDateTime) ? new Date(emailBody.match(conf.regExpRsvStartDateTime)[1]) : null; // 開始時刻の取得
-    const endDatetime = emailBody.match(conf.regExpRsvEndDateTime) ? new Date(emailBody.match(conf.regExpRsvEndDateTime)[1]) : null; // 終了時刻の取得
+    const rsvStartDateTime = emailBody.match(conf.regExpRsvStartDateTime) ? new Date(emailBody.match(conf.regExpRsvStartDateTime)[1]) : null; // 予約:開始時刻の取得
+    const rsvEndDatetime = emailBody.match(conf.regExpRsvEndDateTime) ? new Date(emailBody.match(conf.regExpRsvEndDateTime)[1]) : null; // 予約:終了時刻の取得
+    const rtnStartDateTime = emailBody.match(conf.regExpRtnStartDateTime) ? new Date(emailBody.match(conf.regExpRtnStartDateTime)[1]) : null; // 返却:開始時刻の取得
+    const rtnEndDatetime = emailBody.match(conf.regExpRtnEndDateTime) ? new Date(emailBody.match(conf.regExpRtnEndDateTime)[1]) : null; // 返却:終了時刻の取得
 
     // 同期履歴を参照
     conditions = [
@@ -59,8 +61,8 @@ function createEventFromGmail() {
       const eventTitle = conf.subjectCalendarEvent + ' :' + reservationNumber;
       const event = calendar.createEvent(
         eventTitle,
-        startDateTime,
-        endDatetime,
+        rsvStartDateTime,
+        rsvEndDatetime,
         {
           description: emailBody
         }
@@ -84,7 +86,7 @@ function createEventFromGmail() {
       const eventId = syncHisData[0][conf.headerCalendarEventId];
       const event = calendar.getEventById(eventId);
       // 情報の更新
-      event.setTime(startDateTime, endDatetime); // 予約時刻
+      event.setTime(rsvStartDateTime, rsvEndDatetime); // 予約時刻
       event.setDescription(emailBody); // 説明欄
 
       // Database データの更新
@@ -115,6 +117,7 @@ function createEventFromGmail() {
       const eventId = syncHisData[0][conf.headerCalendarEventId];
       const event = calendar.getEventById(eventId);
       // 情報の更新
+      event.setTime(rtnStartDateTime, rtnEndDatetime); // 返却時刻
       event.setDescription(emailBody); // 説明欄
 
       // Database データの更新

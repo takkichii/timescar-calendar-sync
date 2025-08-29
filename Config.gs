@@ -33,8 +33,10 @@ function config() {
 
   // 文字列取得のための正規表現
   this.regExpRsvNumber = /■予約番号\s*(\d+)/;
-  this.regExpRsvStartDateTime = /■利用開始日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/;
-  this.regExpRsvEndDateTime = /■返却予定日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/;
+  this.regExpRsvStartDateTime = /■利用開始日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/; // 予約時
+  this.regExpRsvEndDateTime = /■返却予定日時\s*(\d{4}\/\d{2}\/\d{2}\s\d{2}:\d{2})(?:\S|\s)*?■/; // 予約時
+  this.regExpRtnStartDateTime = /■利用時間\s*\n(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2})/; // 返却時:開始日時
+  this.regExpRtnEndDateTime = /■利用時間\s*\n.*?-\s*(\d{4}\/\d{2}\/\d{2} \d{2}:\d{2})/; // 返却時:終了日時
   
   return this;
 }
